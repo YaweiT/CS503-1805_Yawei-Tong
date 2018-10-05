@@ -1,10 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import {Problem} from '../models/problem.model';
-//import {PROBLEMS} from '../../mock-problems';
-import {DataService} from '../../services/data.service';
+import {Problem} from './components/models/problem.model';
 
-/*
-const PROBLEMS: Problem[] = [
+
+export const PROBLEMS: Problem[] = [
 	{
 		 "id":1,
 		 "name":"Two Sum",
@@ -35,27 +32,3 @@ const PROBLEMS: Problem[] = [
 		 "desc":"Given an array of n integer with duplicate number, and a moving window(size k), move the window at each iteration from the start of the array, find the maximum number inside the window at each moving.",
 		 "difficulty":"super"
 	}];
-*/
-
-@Component({
-  selector: 'app-problem-list',
-  templateUrl: './problem-list.component.html',
-  styleUrls: ['./problem-list.component.css']
-})
-
-export class ProblemListComponent implements OnInit {
-	problems: Problem[];
-
-
-  constructor(private dataService: DataService ) { }
-
-  ngOnInit() {
-  	this.getProblems();
-  } 
-
-  getProblems(){
-  	this.problems = this.dataService.getProblems();
-
-  }
-
-}
