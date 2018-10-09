@@ -3,6 +3,10 @@ const router = express.Router();
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
 
+//for mongoDEB
+const mongoose = require('mongoose');
+mongoose.connect('mongodb://Yawei:tyw901018@ds227243.mlab.com:27243/yawei-cs1805')
+
 //place holder, nee problemService later on, to communicate with Database.
 const problemService = require('../services/problemService');
 
