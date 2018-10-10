@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {Problem} from '../models/problem.model';
 //import {PROBLEMS} from '../../mock-problems';
 import {DataService} from '../../services/data.service';
+import { Subscription } from 'rxjs';
+
 
 /*
 const PROBLEMS: Problem[] = [
@@ -43,8 +45,9 @@ const PROBLEMS: Problem[] = [
   styleUrls: ['./problem-list.component.css']
 })
 
-export class ProblemListComponent implements OnInit {
+export class ProblemListComponent implements OnInit, OnDestroy {
 	problems: Problem[];
+	subscriptionProblems: Subscription;
 
 
   constructor(private dataService: DataService ) { }
@@ -53,8 +56,14 @@ export class ProblemListComponent implements OnInit {
   	this.getProblems();
   } 
 
+  ngOnDestroy(){
+  	this.subscriptionProblems.unsubscribe();
+  }
+
   getProblems(){
-  	this.problems = this.dataService.getProblems();
+  	// this.problems = this.dataService.getProblems();
+  	this.subscriptionProblems = this.dataService.getProblmes()
+  		.subscribe(Problems => this.problems = problems);
 
   }
 

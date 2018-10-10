@@ -2,6 +2,7 @@
 
 const app = express();
 const restRouter = require('./routes/rest');
+const indexRouter = require('./routes/index');
 
 // app.get('/', (req,res) =>{
 // 	res.send('Hello world from express here!!!!!!');
