@@ -1,60 +1,57 @@
 import { Injectable } from '@angular/core';
-import {Problem} from '../components/models/problem.model';
-//import {PROBLEMS} from '../mock-problems';
-import { HttpClient, HttpHeaders, HttpResponse } from 'angular/common/http';
-import{Observable } from 'rxjs';
-import {BehaviorSubject} from 'rxjs';
+// import { Problem } from '../models/problem.model';
+// import { PROBLEMS } from '../mock-problems';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
+import { Problem } from '../components/models/problem.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
-	//problems : Problem[] = PROBLEMS;
+  //problems: Problem[] = PROBLEMS;
   private _problemSource = new BehaviorSubject<Problem[]>([]);
 
+  constructor(private httpClient: HttpClient) { }
 
-  constructor( private httpClient: HttpClient) { }
-
-  // //get all the problems
-  // getProblems():Problem[]{
-  // 	return this.problems;
+  // getProblems(): Problem[] {
+  //   return this.problems;
   // }
 
-  // //get specified problem by ID
-  // getProblem(id: number):Problem{
-  // 	return this.problems.find((problem) => problem.id === id)
+  // getProblem(id: number): Problem {
+  //   return this.problems.find( (problem) => problem.id === id);
   // }
 
-  // addProblem(problem:Problem){
-  //   problem.id=this.problems.length +1;
+  // addProblem(problem: Problem) {
+  //   problem.id = this.problems.length + 1;
   //   this.problems.push(problem);
   // }
 
-//instead of using post man, now we are coding the get procedure 
-  getProblems(): Observable<Problem[]>{
+  getProblems(): Observable<Problem[]> {
     this.httpClient.get('api/v1/problems')
       .toPromise()
-      .then( (res : any) => {
+      .then((res: any) => {
         this._problemSource.next(res);
       })
       .catch(this.handleError);
 
-      return this._problemSource.asObservable();
-  } 
+     return this._problemSource.asObservable();
+  }
 
-  getProblem(id : number): Promise<Problem>{
-    return this.httpClient.get(`api/v1/problem/${id}`)
+  getProblem(id: number): Promise<Problem> {
+    return this.httpClient.get(`api/v1/problems/${id}`)
       .toPromise()
-      .then( (res: any) => res)
+      .then((res: any) => res)
       .catch(this.handleError);
   }
 
-  addProblem( problem: Problem) {
-    const options = { header : new HttpHeaders({'Content-Type':'application/json'})};
+  addProblem(problem: Problem) {
+    const options = { headers: new HttpHeaders({ 'Content-Type': 'application/json'})};
     return this.httpClient.post('api/v1/problems', problem, options)
       .toPromise()
-      .then( (res:any) => {
+      .then((res: any) => {
         this.getProblems();
 
         return res;
@@ -62,7 +59,7 @@ export class DataService {
       .catch(this.handleError);
   }
 
-  private handleError(err: any) : Promise<any>{
-    return Promise.reject(err.body || err);
+  private handleError(error: any): Promise<any> {
+    return Promise.reject(error.body || error);
   }
 }
